@@ -1,0 +1,193 @@
+@import "tailwindcss";
+
+/*
+  Binibini AI — visual direction: dark editorial luxury.
+  Obsidian stage, champagne-gold spotlight, orchid sash. Filipino pageant glamour.
+*/
+
+@theme {
+  /* surfaces */
+  --color-ink: oklch(15% 0.018 300);
+  --color-ink-800: oklch(18% 0.02 300);
+  --color-ink-700: oklch(22% 0.022 300);
+  --color-ink-600: oklch(28% 0.024 300);
+  --color-line: oklch(32% 0.02 300);
+
+  /* text */
+  --color-cream: oklch(96% 0.012 90);
+  --color-mist: oklch(76% 0.02 300);
+  --color-faint: oklch(67% 0.02 300);
+
+  /* champagne gold — primary accent */
+  --color-gold: oklch(82% 0.12 85);
+  --color-gold-bright: oklch(88% 0.14 88);
+  --color-gold-deep: oklch(68% 0.11 78);
+
+  /* orchid / sash — secondary accent */
+  --color-orchid: oklch(66% 0.2 342);
+  --color-orchid-bright: oklch(74% 0.21 344);
+
+  /* jade — craft & originality axis (judged merit) */
+  --color-jade: oklch(72% 0.13 165);
+  --color-jade-bright: oklch(80% 0.14 168);
+  --color-jade-deep: oklch(60% 0.12 162);
+
+  /* fonts */
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-geist-sans);
+
+  /* motion */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-ink);
+  color: var(--color-cream);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* atmospheric backdrop — soft gold + orchid glow, fixed behind everything */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 45% at 78% 8%, oklch(66% 0.2 342 / 0.14), transparent 70%),
+    radial-gradient(55% 40% at 12% 4%, oklch(82% 0.12 85 / 0.1), transparent 70%),
+    radial-gradient(80% 60% at 50% 120%, oklch(66% 0.2 342 / 0.08), transparent 70%);
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+/* thin luxe scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink-600);
+  border-radius: 999px;
+  border: 2px solid var(--color-ink);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold-deep);
+}
+
+@utility text-gradient-gold {
+  background: linear-gradient(
+    100deg,
+    var(--color-gold-bright),
+    var(--color-gold),
+    var(--color-orchid-bright)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility card {
+  background: linear-gradient(
+    160deg,
+    oklch(22% 0.022 300 / 0.9),
+    oklch(17% 0.018 300 / 0.9)
+  );
+  border: 1px solid var(--color-line);
+  border-radius: 1.25rem;
+  backdrop-filter: blur(8px);
+}
+
+/* shimmering hairline used on section dividers + sashes */
+@utility rule-gold {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-gold) 20%,
+    var(--color-orchid) 80%,
+    transparent
+  );
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    background-position: 200% center;
+  }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.animate-rise {
+  animation: rise 0.7s var(--ease-expo) both;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+/* faint star-sash rays behind the hero crown */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* accessibility: visible focus everywhere */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* accessibility: honor reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-marquee,
+  .animate-float-slow,
+  .animate-rise {
+    animation: none !important;
+  }
+}
